@@ -21,15 +21,15 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING
   8 .debug_abbrev 000003ba  00000000  00000000  00001b3d  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_line   0000068f  00000000  00000000  00001ef7  2**0
+  9 .debug_line   0000068c  00000000  00000000  00001ef7  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_frame  000002b8  00000000  00000000  00002588  2**2
+ 10 .debug_frame  000002b8  00000000  00000000  00002584  2**2
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_str    0000021a  00000000  00000000  00002840  2**0
+ 11 .debug_str    0000024c  00000000  00000000  0000283c  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_loc    00000493  00000000  00000000  00002a5a  2**0
+ 12 .debug_loc    00000493  00000000  00000000  00002a88  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_ranges 000000c0  00000000  00000000  00002eed  2**0
+ 13 .debug_ranges 000000c0  00000000  00000000  00002f1b  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -128,12 +128,13 @@ int main(void)
 	sei();
   7a:	78 94       	sei
 	
+	
+	
 	/** DEBUG-Startwert **/
 	motor_dir( _BRK, _FWD);
   7c:	61 e0       	ldi	r22, 0x01	; 1
   7e:	80 e0       	ldi	r24, 0x00	; 0
   80:	4b d0       	rcall	.+150    	; 0x118 <motor_dir>
-
 		
     while(1)
     {
@@ -983,11 +984,7 @@ void test(void)
  546:	87 ee       	ldi	r24, 0xE7	; 231
  548:	90 e0       	ldi	r25, 0x00	; 0
  54a:	7b d0       	rcall	.+246    	; 0x642 <uart_puts>
-			uart_puts(_CR);
-		}
-		
-      }//( tmr_ovf == _SET)
-#endif	  
+	
 }//void test(void)
  54c:	df 91       	pop	r29
  54e:	cf 91       	pop	r28

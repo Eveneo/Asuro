@@ -538,15 +538,15 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
  .debug_abbrev  0x00000284       0x7a timer.o
  .debug_abbrev  0x000002fe       0xbc uart.o
 
-.debug_line     0x00000000      0x68f
+.debug_line     0x00000000      0x68c
  *(.debug_line)
  .debug_line    0x00000000       0x4c Asuro.o
  .debug_line    0x0000004c      0x114 motor_control.o
  .debug_line    0x00000160      0x11a odometrie.o
  .debug_line    0x0000027a      0x115 status_led.o
- .debug_line    0x0000038f       0xfc test.o
- .debug_line    0x0000048b       0xe6 timer.o
- .debug_line    0x00000571      0x11e uart.o
+ .debug_line    0x0000038f       0xf9 test.o
+ .debug_line    0x00000488       0xe6 timer.o
+ .debug_line    0x0000056e      0x11e uart.o
 
 .debug_frame    0x00000000      0x2b8
  *(.debug_frame)
@@ -558,21 +558,21 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
  .debug_frame   0x000001c4       0x60 timer.o
  .debug_frame   0x00000224       0x94 uart.o
 
-.debug_str      0x00000000      0x21a
+.debug_str      0x00000000      0x24c
  *(.debug_str)
- .debug_str     0x00000000       0x7e Asuro.o
-                                 0xb2 (size before relaxing)
- .debug_str     0x0000007e       0x3c motor_control.o
+ .debug_str     0x00000000       0x83 Asuro.o
+                                 0xb7 (size before relaxing)
+ .debug_str     0x00000083       0x69 motor_control.o
                                  0xec (size before relaxing)
- .debug_str     0x000000ba       0x68 odometrie.o
-                                0x115 (size before relaxing)
- .debug_str     0x00000122       0x36 status_led.o
+ .debug_str     0x000000ec       0x68 odometrie.o
+                                0x11a (size before relaxing)
+ .debug_str     0x00000154       0x36 status_led.o
                                  0xee (size before relaxing)
- .debug_str     0x00000158       0x49 test.o
-                                 0xf9 (size before relaxing)
- .debug_str     0x000001a1       0x2b timer.o
+ .debug_str     0x0000018a       0x49 test.o
+                                 0xfe (size before relaxing)
+ .debug_str     0x000001d3       0x2b timer.o
                                  0xd8 (size before relaxing)
- .debug_str     0x000001cc       0x4e uart.o
+ .debug_str     0x000001fe       0x4e uart.o
                                 0x104 (size before relaxing)
 
 .debug_loc      0x00000000      0x493
