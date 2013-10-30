@@ -10,87 +10,87 @@
 #include "uart.h"
 
 /************************************************************************
-* /brief	Initialisierung UART
-*			- Setzen der Baudrate
-*			- Aktivieren des Senders (TxD) und Empfängers (RxD)
-*			- Festlegen des Formats ( 8data, 1 stop bit)
+* /brief    Initialisierung UART
+*            - Setzen der Baudrate
+*            - Aktivieren des Senders (TxD) und Empfängers (RxD)
+*            - Festlegen des Formats ( 8data, 1 stop bit)
 *
-* /param	none
+* /param    none
 *
-* /return	none
+* /return   none
 *
 *
 ************************************************************************/
 void init_uart(void)
 {
-		uint8_t ubrr;
-		ubrr = _FOSC/16/_BAUD-1;
-		/* Set baud rate */
-		UBRRH = (unsigned char)(ubrr>>8);
-		UBRRL = (unsigned char)ubrr;
-		/* Enable receiver and transmitter */
-		UCSRB |= (1<<TXEN);
-		/* Set frame format: 8data, 1stop bit */
-		UCSRC = (1<<URSEL) |(3<<UCSZ0);
-		
-		uart_puts("uart init done..." _CR);
+        uint8_t ubrr;
+        ubrr = _FOSC/16/_BAUD-1;
+        /* Set baud rate */
+        UBRRH = (unsigned char)(ubrr>>8);
+        UBRRL = (unsigned char)ubrr;
+        /* Enable receiver and transmitter */
+        UCSRB |= (1<<TXEN);
+        /* Set frame format: 8data, 1stop bit */
+        UCSRC = (1<<URSEL) |(3<<UCSZ0);
+        
+        uart_puts("uart init done..." _CR);
 }
 
 /************************************************************************
-* /brief	Übertragen eines ASCII Zeichens (z.B. tab, return etc.)
-*			Siehe ASCII Tabelle 
+* /brief    Übertragen eines ASCII Zeichens (z.B. tab, return etc.)
+*            Siehe ASCII Tabelle 
 *
-* /param	data:	ASCII Code (0..255)
+* /param    data:    ASCII Code (0..255)
 *
-* /return	none
+* /return   none
 *
 *
 ************************************************************************/
 void uart_putc(unsigned char data) 
-{	
-	/* Wait for empty transmit buffer */
-	while ( !( UCSRA & (1<<UDRE)) )
-	;
-	/* Put data into buffer, sends the data */
-	UDR = data;
+{    
+    /* Wait for empty transmit buffer */
+    while ( !( UCSRA & (1<<UDRE)) )
+    ;
+    /* Put data into buffer, sends the data */
+    UDR = data;
 }
 
 /************************************************************************
-* /brief	Übertragen eines Strings über UART
+* /brief    Übertragen eines Strings über UART
 *
-* /param	*s	zu übertragenden Text in "" einfügen
+* /param    *s    zu übertragenden Text in "" einfügen
 *
-* /return	none
+* /return    none
 *
-* /example	uart_puts("Test Text");
+* /example    uart_puts("Test");
 *
 ************************************************************************/
 void uart_puts (const char *s)
 {
-	do
-	{
-		uart_putc (*s);
-	}
-	while (*s++);
+    do
+    {
+        uart_putc (*s);
+    }
+    while (*s++);
 }
 
 /************************************************************************
-* /brief	Übertragen eines Zahlenwertes (uint16_t)
+* /brief    Übertragen eines Zahlenwertes (uint16_t)
 *
-* /param	data:	Zahl oder Variable (0..65536)
+* /param    data:    uint16_t Variable (0..65536)
 *
-* /return	none
+* /return   none
 *
-* /example	uint16_t i = 2000;
+* /example  uint16_t i = 2000;
 *
-*			uart_puti(i);
+*           uart_puti(i);
 *
 ************************************************************************/
 void uart_puti( uint16_t data )
 {
-	char buffer[6];
-	itoa(data, buffer, 10);
-	uart_puts(buffer);
+    char buffer[6];
+    itoa(data, buffer, 10);
+    uart_puts(buffer);
 }
 
 

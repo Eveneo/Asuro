@@ -112,6 +112,12 @@
     <Compile Include="asuro.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="line.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="line.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="motor_control.c">
       <SubType>compile</SubType>
     </Compile>

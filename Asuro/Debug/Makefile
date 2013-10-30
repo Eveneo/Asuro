@@ -37,6 +37,7 @@ SUBDIRS :=
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
 ../Asuro.c \
+../line.c \
 ../motor_control.c \
 ../odometrie.c \
 ../status_led.c \
@@ -53,6 +54,7 @@ ASM_SRCS +=
 
 OBJS +=  \
 Asuro.o \
+line.o \
 motor_control.o \
 odometrie.o \
 status_led.o \
@@ -62,6 +64,7 @@ uart.o
 
 OBJS_AS_ARGS +=  \
 Asuro.o \
+line.o \
 motor_control.o \
 odometrie.o \
 status_led.o \
@@ -71,6 +74,7 @@ uart.o
 
 C_DEPS +=  \
 Asuro.d \
+line.d \
 motor_control.d \
 odometrie.d \
 status_led.d \
@@ -80,6 +84,7 @@ uart.d
 
 C_DEPS_AS_ARGS +=  \
 Asuro.d \
+line.d \
 motor_control.d \
 odometrie.d \
 status_led.d \
@@ -98,6 +103,8 @@ OUTPUT_FILE_DEP:= ./makedep.mk
 LIB_DEP+= 
 
 # AVR32/GNU C Compiler
+
+
 
 
 

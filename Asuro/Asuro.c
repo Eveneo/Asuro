@@ -14,36 +14,35 @@
 #include "motor_control.h"
 #include "odometrie.h"
 #include "timer.h"
+#include "line.h"
 
 /** Test **/
 #include "test.h"
 
 
 int main(void)
-{	
-	/** Initialisierungen **/	
-	init_uart();							// initialisiere IR Übertragung
-	init_led();								// initialisiere LED Steuerung
-	init_motor();							// initialisere Motor Steuerung
-	init_od();								// initialisiere odometrie
-	init_timer();							// initialisiere Timer
-	
-	status_led( _GREEN);
-	uart_puts("all inits done..." _CR);
-	sei();
-	
-	
-	
-	/** DEBUG-Startwert **/
-	motor_dir( _BRK, _FWD);
-		
+{    
+    /** Initialisierungen **/    
+    init_uart();                            // initialisiere IR Übertragung
+    init_led();                             // initialisiere LED Steuerung
+    init_motor();                           // initialisiere Motor Steuerung
+    init_od();                              // initialisiere Odometrie
+    init_timer();                           // initialisiere Timer
+    init_line();                            // initialisiere Linienerkennung
+    
+    status_led( _GREEN);                    
+    line_led(_ON);
+    uart_puts("all inits done..." _CR);
+    sei();                                  // aktiviere globale Interrupts
+    
+         
     while(1)
     {
 
-		test();
+        test();
 
     }//while(1)
-	
-	return 0;
-	
+    
+    return 0;
+    
 }//int main(void)

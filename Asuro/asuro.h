@@ -18,6 +18,8 @@
 #define _SET 1
 #define _CLR 0
 
+#define _LEFT 0
+#define _RIGHT 1
 
 
 #endif /* ASURO_H_ */

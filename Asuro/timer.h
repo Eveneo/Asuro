@@ -9,6 +9,16 @@
 #ifndef TIMER_H_
 #define TIMER_H_
 
+/************************************************************************
+* /brief    Initialisierung Timer für Sekundentakt etc.
+*
+*
+* /param    none
+*
+* /return   none
+*
+*
+************************************************************************/
 void init_timer(void);
 
 

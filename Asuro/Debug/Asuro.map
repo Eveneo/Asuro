@@ -17,36 +17,35 @@ Allocating common symbols
 Common symbol       size              file
 
 toggle_bit          0x1               odometrie.o
-timer_counter       0x1               test.o
-tmr_ovf             0x1               timer.o
 
 Discarded input sections
 
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr4/crtm8.o
  .text          0x00000000        0x0 Asuro.o
  .bss           0x00000000        0x0 Asuro.o
+ .text          0x00000000        0x0 line.o
+ .bss           0x00000000        0x0 line.o
  .text          0x00000000        0x0 motor_control.o
  .bss           0x00000000        0x0 motor_control.o
+ .text.motor_dir
+                0x00000000       0xec motor_control.o
+ .text.motor_pwr
+                0x00000000       0x2c motor_control.o
  .text          0x00000000        0x0 odometrie.o
  .bss           0x00000000        0x0 odometrie.o
+ .text.get_od_adc
+                0x00000000       0xe2 odometrie.o
  .text.get_tick
                 0x00000000       0x68 odometrie.o
  COMMON         0x00000000        0x1 odometrie.o
  .text          0x00000000        0x0 status_led.o
  .bss           0x00000000        0x0 status_led.o
  .text.back_led
-                0x00000000       0x8a status_led.o
+                0x00000000       0x8c status_led.o
  .text          0x00000000        0x0 test.o
  .bss           0x00000000        0x0 test.o
- .data.ticks_left
-                0x00000000        0x1 test.o
- .data.ticks_right
-                0x00000000        0x1 test.o
- .data.rpm_right
-                0x00000000        0x1 test.o
- .data.rpm_left
-                0x00000000        0x1 test.o
- COMMON         0x00000000        0x1 test.o
+ .bss.counter   0x00000000        0x1 test.o
+ .text.test     0x00000000        0xe test.o
  .text          0x00000000        0x0 timer.o
  .bss           0x00000000        0x0 timer.o
  .text          0x00000000        0x0 uart.o
@@ -122,6 +121,7 @@ Linker script and memory map
 
 LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr4/crtm8.o
 LOAD Asuro.o
+LOAD line.o
 LOAD motor_control.o
 LOAD odometrie.o
 LOAD status_led.o
@@ -225,7 +225,7 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000      0x74e
+.text           0x00000000      0x5d0
  *(.vectors)
  .vectors       0x00000000       0x26 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr4/crtm8.o
                 0x00000000                __vector_default
@@ -301,62 +301,60 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
                 0x0000005c                __vector_18
                 0x0000005e                . = ALIGN (0x2)
  *(.text.*)
- .text.main     0x0000005e       0x28 Asuro.o
+ .text.main     0x0000005e       0x46 Asuro.o
                 0x0000005e                main
+ .text.init_line
+                0x000000a4       0x3e line.o
+                0x000000a4                init_line
+ .text.get_line_adc
+                0x000000e2       0xd8 line.o
+                0x000000e2                get_line_adc
  .text.init_motor
-                0x00000086       0x92 motor_control.o
-                0x00000086                init_motor
- .text.motor_dir
-                0x00000118       0xec motor_control.o
-                0x00000118                motor_dir
- .text.motor_pwr
-                0x00000204       0x2c motor_control.o
-                0x00000204                motor_pwr
- .text.init_od  0x00000230       0x4a odometrie.o
-                0x00000230                init_od
- .text.get_od_adc
-                0x0000027a       0xe2 odometrie.o
-                0x0000027a                get_od_adc
+                0x000001ba       0x92 motor_control.o
+                0x000001ba                init_motor
+ .text.init_od  0x0000024c       0x4a odometrie.o
+                0x0000024c                init_od
  .text.init_led
-                0x0000035c       0x4a status_led.o
-                0x0000035c                init_led
+                0x00000296       0x5c status_led.o
+                0x00000296                init_led
  .text.status_led
-                0x000003a6       0x96 status_led.o
-                0x000003a6                status_led
- .text.test     0x0000043c      0x116 test.o
-                0x0000043c                test
+                0x000002f2       0x9e status_led.o
+                0x000002f2                status_led
+ .text.line_led
+                0x00000390       0x4e status_led.o
+                0x00000390                line_led
  .text.init_timer
-                0x00000552       0x38 timer.o
-                0x00000552                init_timer
+                0x000003de       0x38 timer.o
+                0x000003de                init_timer
  .text.__vector_9
-                0x0000058a       0x2e timer.o
-                0x0000058a                __vector_9
+                0x00000416       0x24 timer.o
+                0x00000416                __vector_9
  .text.init_uart
-                0x000005b8       0x56 uart.o
-                0x000005b8                init_uart
+                0x0000043a       0x56 uart.o
+                0x0000043a                init_uart
  .text.uart_putc
-                0x0000060e       0x34 uart.o
-                0x0000060e                uart_putc
+                0x00000490       0x34 uart.o
+                0x00000490                uart_putc
  .text.uart_puts
-                0x00000642       0x40 uart.o
-                0x00000642                uart_puts
+                0x000004c4       0x40 uart.o
+                0x000004c4                uart_puts
  .text.uart_puti
-                0x00000682       0x42 uart.o
-                0x00000682                uart_puti
+                0x00000504       0x42 uart.o
+                0x00000504                uart_puti
  .text.avr-libc
-                0x000006c4       0x3e c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr4\libc.a(itoa.o)
-                0x000006c4                itoa
+                0x00000546       0x3e c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr4\libc.a(itoa.o)
+                0x00000546                itoa
  .text.avr-libc
-                0x00000702       0x20 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr4\libc.a(strrev.o)
-                0x00000702                strrev
+                0x00000584       0x20 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr4\libc.a(strrev.o)
+                0x00000584                strrev
  .text.libgcc.div
-                0x00000722       0x28 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr4\libgcc.a(_udivmodhi4.o)
-                0x00000722                __udivmodhi4
-                0x0000074a                . = ALIGN (0x2)
+                0x000005a4       0x28 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr4\libgcc.a(_udivmodhi4.o)
+                0x000005a4                __udivmodhi4
+                0x000005cc                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x0000074a        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr4\libgcc.a(_exit.o)
-                0x0000074a                _exit
-                0x0000074a                exit
+ .fini9         0x000005cc        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr4\libgcc.a(_exit.o)
+                0x000005cc                _exit
+                0x000005cc                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -375,15 +373,16 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x0000074a        0x4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr4\libgcc.a(_exit.o)
+ .fini0         0x000005cc        0x4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr4\libgcc.a(_exit.o)
  *(.fini0)
-                0x0000074e                _etext = .
+                0x000005d0                _etext = .
 
-.data           0x00800060       0xb2 load address 0x0000074e
+.data           0x00800060      0x102 load address 0x000005d0
                 0x00800060                PROVIDE (__data_start, .)
  *(.data)
  .data          0x00800060        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr4/crtm8.o
  .data          0x00800060        0x0 Asuro.o
+ .data          0x00800060        0x0 line.o
  .data          0x00800060        0x0 motor_control.o
  .data          0x00800060        0x0 odometrie.o
  .data          0x00800060        0x0 status_led.o
@@ -398,38 +397,34 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
  .data          0x00800060        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr4\libgcc.a(_udivmodhi4.o)
  *(.data*)
  *(.rodata)
- .rodata        0x00800060       0x14 Asuro.o
- .rodata        0x00800074       0x15 motor_control.o
- .rodata        0x00800089       0x19 odometrie.o
- .rodata        0x008000a2       0x13 status_led.o
- .rodata        0x008000b5       0x34 test.o
- .rodata        0x008000e9       0x15 timer.o
- .rodata        0x008000fe       0x14 uart.o
+ .rodata        0x00800060       0x19 Asuro.o
+ .rodata        0x00800079       0x3f line.o
+ .rodata        0x008000b8       0x15 motor_control.o
+ .rodata        0x008000cd       0x19 odometrie.o
+ .rodata        0x008000e6       0x53 status_led.o
+ .rodata        0x00800139       0x15 timer.o
+ .rodata        0x0080014e       0x14 uart.o
  *(.rodata*)
  *(.gnu.linkonce.d*)
-                0x00800112                . = ALIGN (0x2)
-                0x00800112                _edata = .
-                0x00800112                PROVIDE (__data_end, .)
+                0x00800162                . = ALIGN (0x2)
+                0x00800162                _edata = .
+                0x00800162                PROVIDE (__data_end, .)
 
-.bss            0x00800112        0x2
-                0x00800112                PROVIDE (__bss_start, .)
+.bss            0x00800162        0x0
+                0x00800162                PROVIDE (__bss_start, .)
  *(.bss)
  *(.bss*)
- .bss.counter   0x00800112        0x1 test.o
-                0x00800112                counter
  *(COMMON)
- COMMON         0x00800113        0x1 timer.o
-                0x00800113                tmr_ovf
-                0x00800114                PROVIDE (__bss_end, .)
-                0x0000074e                __data_load_start = LOADADDR (.data)
-                0x00000800                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x00800162                PROVIDE (__bss_end, .)
+                0x000005d0                __data_load_start = LOADADDR (.data)
+                0x000006d2                __data_load_end = (__data_load_start + SIZEOF (.data))
 
-.noinit         0x00800114        0x0
-                0x00800114                PROVIDE (__noinit_start, .)
+.noinit         0x00800162        0x0
+                0x00800162                PROVIDE (__noinit_start, .)
  *(.noinit*)
-                0x00800114                PROVIDE (__noinit_end, .)
-                0x00800114                _end = .
-                0x00800114                PROVIDE (__heap_start, .)
+                0x00800162                PROVIDE (__noinit_end, .)
+                0x00800162                _end = .
+                0x00800162                PROVIDE (__heap_start, .)
 
 .eeprom         0x00810000        0x0
  *(.eeprom*)
@@ -478,6 +473,7 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
  *(.comment)
  .comment       0x00000000       0x2f Asuro.o
                                  0x30 (size before relaxing)
+ .comment       0x00000000       0x30 line.o
  .comment       0x00000000       0x30 motor_control.o
  .comment       0x00000000       0x30 odometrie.o
  .comment       0x00000000       0x30 status_led.o
@@ -497,93 +493,102 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
 .debug_sfnames
  *(.debug_sfnames)
 
-.debug_aranges  0x00000000      0x130
+.debug_aranges  0x00000000      0x160
  *(.debug_aranges)
  .debug_aranges
                 0x00000000       0x20 Asuro.o
  .debug_aranges
-                0x00000020       0x30 motor_control.o
+                0x00000020       0x28 line.o
  .debug_aranges
-                0x00000050       0x30 odometrie.o
+                0x00000048       0x30 motor_control.o
  .debug_aranges
-                0x00000080       0x30 status_led.o
+                0x00000078       0x30 odometrie.o
  .debug_aranges
-                0x000000b0       0x20 test.o
+                0x000000a8       0x38 status_led.o
  .debug_aranges
-                0x000000d0       0x28 timer.o
+                0x000000e0       0x20 test.o
  .debug_aranges
-                0x000000f8       0x38 uart.o
+                0x00000100       0x28 timer.o
+ .debug_aranges
+                0x00000128       0x38 uart.o
 
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000      0x673
+.debug_info     0x00000000      0x6eb
  *(.debug_info)
  .debug_info    0x00000000       0x7c Asuro.o
- .debug_info    0x0000007c       0xf4 motor_control.o
- .debug_info    0x00000170      0x12b odometrie.o
- .debug_info    0x0000029b       0xe6 status_led.o
- .debug_info    0x00000381       0xef test.o
- .debug_info    0x00000470       0xb2 timer.o
- .debug_info    0x00000522      0x151 uart.o
+ .debug_info    0x0000007c       0xc2 line.o
+ .debug_info    0x0000013e       0xf4 motor_control.o
+ .debug_info    0x00000232      0x12b odometrie.o
+ .debug_info    0x0000035d      0x10f status_led.o
+ .debug_info    0x0000046c       0x95 test.o
+ .debug_info    0x00000501       0x99 timer.o
+ .debug_info    0x0000059a      0x151 uart.o
  *(.gnu.linkonce.wi.*)
 
-.debug_abbrev   0x00000000      0x3ba
+.debug_abbrev   0x00000000      0x43f
  *(.debug_abbrev)
  .debug_abbrev  0x00000000       0x46 Asuro.o
- .debug_abbrev  0x00000046       0x92 motor_control.o
- .debug_abbrev  0x000000d8       0xb8 odometrie.o
- .debug_abbrev  0x00000190       0x92 status_led.o
- .debug_abbrev  0x00000222       0x62 test.o
- .debug_abbrev  0x00000284       0x7a timer.o
- .debug_abbrev  0x000002fe       0xbc uart.o
+ .debug_abbrev  0x00000046       0x7c line.o
+ .debug_abbrev  0x000000c2       0x92 motor_control.o
+ .debug_abbrev  0x00000154       0xb8 odometrie.o
+ .debug_abbrev  0x0000020c       0xac status_led.o
+ .debug_abbrev  0x000002b8       0x62 test.o
+ .debug_abbrev  0x0000031a       0x69 timer.o
+ .debug_abbrev  0x00000383       0xbc uart.o
 
-.debug_line     0x00000000      0x68c
+.debug_line     0x00000000      0x77f
  *(.debug_line)
- .debug_line    0x00000000       0x4c Asuro.o
- .debug_line    0x0000004c      0x114 motor_control.o
- .debug_line    0x00000160      0x11a odometrie.o
- .debug_line    0x0000027a      0x115 status_led.o
- .debug_line    0x0000038f       0xf9 test.o
- .debug_line    0x00000488       0xe6 timer.o
- .debug_line    0x0000056e      0x11e uart.o
+ .debug_line    0x00000000       0x5c Asuro.o
+ .debug_line    0x0000005c       0xf3 line.o
+ .debug_line    0x0000014f      0x114 motor_control.o
+ .debug_line    0x00000263      0x11a odometrie.o
+ .debug_line    0x0000037d      0x12e status_led.o
+ .debug_line    0x000004ab       0xd1 test.o
+ .debug_line    0x0000057c       0xe5 timer.o
+ .debug_line    0x00000661      0x11e uart.o
 
-.debug_frame    0x00000000      0x2b8
+.debug_frame    0x00000000      0x328
  *(.debug_frame)
  .debug_frame   0x00000000       0x34 Asuro.o
- .debug_frame   0x00000034       0x74 motor_control.o
- .debug_frame   0x000000a8       0x74 odometrie.o
- .debug_frame   0x0000011c       0x74 status_led.o
- .debug_frame   0x00000190       0x34 test.o
- .debug_frame   0x000001c4       0x60 timer.o
- .debug_frame   0x00000224       0x94 uart.o
+ .debug_frame   0x00000034       0x54 line.o
+ .debug_frame   0x00000088       0x74 motor_control.o
+ .debug_frame   0x000000fc       0x74 odometrie.o
+ .debug_frame   0x00000170       0x94 status_led.o
+ .debug_frame   0x00000204       0x34 test.o
+ .debug_frame   0x00000238       0x5c timer.o
+ .debug_frame   0x00000294       0x94 uart.o
 
-.debug_str      0x00000000      0x24c
+.debug_str      0x00000000      0x225
  *(.debug_str)
  .debug_str     0x00000000       0x83 Asuro.o
                                  0xb7 (size before relaxing)
- .debug_str     0x00000083       0x69 motor_control.o
-                                 0xec (size before relaxing)
- .debug_str     0x000000ec       0x68 odometrie.o
+ .debug_str     0x00000083       0x39 line.o
+                                 0xe3 (size before relaxing)
+ .debug_str     0x000000bc       0x3f motor_control.o
+                                 0xf1 (size before relaxing)
+ .debug_str     0x000000fb       0x5a odometrie.o
                                 0x11a (size before relaxing)
- .debug_str     0x00000154       0x36 status_led.o
-                                 0xee (size before relaxing)
- .debug_str     0x0000018a       0x49 test.o
-                                 0xfe (size before relaxing)
- .debug_str     0x000001d3       0x2b timer.o
-                                 0xd8 (size before relaxing)
- .debug_str     0x000001fe       0x4e uart.o
-                                0x104 (size before relaxing)
+ .debug_str     0x00000155       0x46 status_led.o
+                                0x103 (size before relaxing)
+ .debug_str     0x0000019b       0x19 test.o
+                                 0xc6 (size before relaxing)
+ .debug_str     0x000001b4       0x23 timer.o
+                                 0xd0 (size before relaxing)
+ .debug_str     0x000001d7       0x4e uart.o
+                                0x109 (size before relaxing)
 
-.debug_loc      0x00000000      0x493
+.debug_loc      0x00000000      0x551
  *(.debug_loc)
  .debug_loc     0x00000000       0x3b Asuro.o
- .debug_loc     0x0000003b       0xcb motor_control.o
- .debug_loc     0x00000106       0xcb odometrie.o
- .debug_loc     0x000001d1       0xcb status_led.o
- .debug_loc     0x0000029c       0x3b test.o
- .debug_loc     0x000002d7       0x9d timer.o
- .debug_loc     0x00000374      0x11f uart.o
+ .debug_loc     0x0000003b       0x83 line.o
+ .debug_loc     0x000000be       0xcb motor_control.o
+ .debug_loc     0x00000189       0xcb odometrie.o
+ .debug_loc     0x00000254      0x113 status_led.o
+ .debug_loc     0x00000367       0x3b test.o
+ .debug_loc     0x000003a2       0x90 timer.o
+ .debug_loc     0x00000432      0x11f uart.o
 
 .debug_macinfo
  *(.debug_macinfo)
@@ -591,15 +596,16 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
 .debug_pubtypes
  *(.debug_pubtypes)
 
-.debug_ranges   0x00000000       0xc0
+.debug_ranges   0x00000000       0xe0
  *(.debug_ranges)
  .debug_ranges  0x00000000       0x10 Asuro.o
- .debug_ranges  0x00000010       0x20 motor_control.o
- .debug_ranges  0x00000030       0x20 odometrie.o
- .debug_ranges  0x00000050       0x20 status_led.o
- .debug_ranges  0x00000070       0x10 test.o
- .debug_ranges  0x00000080       0x18 timer.o
- .debug_ranges  0x00000098       0x28 uart.o
+ .debug_ranges  0x00000010       0x18 line.o
+ .debug_ranges  0x00000028       0x20 motor_control.o
+ .debug_ranges  0x00000048       0x20 odometrie.o
+ .debug_ranges  0x00000068       0x28 status_led.o
+ .debug_ranges  0x00000090       0x10 test.o
+ .debug_ranges  0x000000a0       0x18 timer.o
+ .debug_ranges  0x000000b8       0x28 uart.o
 
 .debug_macro
  *(.debug_macro)
