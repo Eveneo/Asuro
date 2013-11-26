@@ -106,6 +106,12 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="adc.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="adc.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Asuro.c">
       <SubType>compile</SubType>
     </Compile>
@@ -134,6 +140,12 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="status_led.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="switch.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="switch.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="test.c">

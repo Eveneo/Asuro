@@ -12,7 +12,8 @@ Asuro.d Asuro.o: .././Asuro.c \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.2.1002\avr8-gnu-toolchain\bin\../lib/gcc/avr/4.7.2/../../../../avr/include/avr/lock.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.2.1002\avr8-gnu-toolchain\bin\../lib/gcc/avr/4.7.2/../../../../avr/include/avr/interrupt.h \
  .././asuro.h .././uart.h .././status_led.h .././motor_control.h \
- .././odometrie.h .././timer.h .././line.h .././test.h
+ .././odometrie.h .././timer.h .././line.h .././switch.h .././adc.h \
+ .././test.h
 
 c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.2.1002\avr8-gnu-toolchain\bin\../lib/gcc/avr/4.7.2/../../../../avr/include/avr/io.h:
 
@@ -51,5 +52,9 @@ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.2.1002\avr8
 .././timer.h:
 
 .././line.h:
+
+.././switch.h:
+
+.././adc.h:
 
 .././test.h:

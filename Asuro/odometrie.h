@@ -16,19 +16,7 @@
 // #define _LEFT 0
 // #define _RIGHT 1
 
-/************************************************************************
-* /brief    Initialisierung der Odometrie ( ADC) :
-*            - Als Spannungsreferenz den AVCC Pin verwenden
-*            - ADC Aktivieren
-*            - Messdauer bestimmen: 1/(Frequenz/Prescaler)= 4µs
-*
-* /param    none
-*
-* /return    none
-*
-*
-************************************************************************/
-void init_od(void);
+
 
 /************************************************************************
 * /brief    ADC Wert der Odometrie bestimmen

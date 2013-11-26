@@ -15,6 +15,8 @@
 #include "odometrie.h"
 #include "timer.h"
 #include "line.h"
+#include "switch.h"
+#include "adc.h"
 
 /** Test **/
 #include "test.h"
@@ -26,20 +28,23 @@ int main(void)
     init_uart();                            // initialisiere IR Übertragung
     init_led();                             // initialisiere LED Steuerung
     init_motor();                           // initialisiere Motor Steuerung
-    init_od();                              // initialisiere Odometrie
+    init_adc();                             // initialisiere ADC
     init_timer();                           // initialisiere Timer
     init_line();                            // initialisiere Linienerkennung
+    init_switch();                          // initialisiere Taster
     
     status_led( _GREEN);                    
     line_led(_ON);
     uart_puts("all inits done..." _CR);
     sei();                                  // aktiviere globale Interrupts
     
+ //   motor_dir(_FWD, _FWD);
+ //   motor_pwr(255, 255);
          
     while(1)
     {
 
-        test();
+       test();
 
     }//while(1)
     

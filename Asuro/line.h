@@ -31,7 +31,7 @@ void init_line(void);
 *           65536   max. hell
 *
 ************************************************************************/
-uint8_t get_line_adc(char side);
+uint16_t get_line_adc(char side);
 
 
 #endif /* LINE_H_ */

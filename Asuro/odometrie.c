@@ -30,29 +30,6 @@
 char toggle_bit;                            // toggle bit für Odometrie
 
 
-/************************************************************************
-* /brief    Initialisierung der Odometrie ( ADC) :
-*            - Als Spannungsreferenz den AVCC Pin verwenden
-*            - ADC Aktivieren
-*            - Messdauer bestimmen: 1/(Frequenz/Prescaler)= 4µs
-*
-* /param    none
-*
-* /return   none
-*
-*
-************************************************************************/
-void init_od(void)
-{
-    ADMUX |= (1 << REFS0);                    // AVCC mit externem Kondensator am AREF-Pin
-    ADCSRA |= (1 << ADEN);                    // ADC Enable
-    ADCSRA |= (1 << ADPS2) | (1 << ADPS0);    // Abtastfrequenz: 8MHz/32=250kHz (4µs)
-    
-    uart_puts("odometrie init done..." _CR);
-}
-
-
-
 
 /************************************************************************
 * /brief    ADC Wert der Odometrie bestimmen
@@ -67,7 +44,7 @@ void init_od(void)
 uint16_t get_od_adc(char side)
 {
     PORTD |= ( 1 << PD7);               // PD7 auf HIGH -> keine LED Steuerung
-    ADCSRA |= ( 1 << ADSC);             // Starte ADC Messung    
+    
     
     if( side == _RIGHT)                 // aktivieren des rechten ADC
     {
@@ -83,7 +60,9 @@ uint16_t get_od_adc(char side)
     ADMUX &= ~( 1 << MUX1);
     ADMUX &= ~( 1 << MUX2);
     ADMUX &= ~( 1 << MUX3);        
-    }        
+    }      
+      
+    ADCSRA |= ( 1 << ADSC);             // Starte ADC Messung    
     
     while( ADSC == 1)                   // Warte bis ADC-Messung beendet
     {
@@ -106,35 +85,35 @@ uint16_t get_od_adc(char side)
 * /param    side:    _RIGHT    Auswahl des rechten Reifens
 *                    _LEFT    Auswahl des linken Reifens
 *
-* /return    1:    schwarz-weiß Wechsel stattgefunden
-*            0:    kein schwarz-weiß Wechsel 
+* /return    1:     schwarz-weiß Wechsel stattgefunden
+*            0:     kein schwarz-weiß Wechsel 
 *
 ************************************************************************/
 uint8_t get_tick( char side)
 {
-    uint16_t adc_value;                    // buffer für adc Wert
+    uint16_t adc_value;                 // buffer für adc Wert
     char toggle_bit_old;                // Toggle Bit
-    uint8_t tick_bit = 0;                // Wechselbit ( schwarz-weiß wechsel)
+    uint8_t tick_bit = 0;               // Wechselbit ( schwarz-weiß wechsel)
     
     toggle_bit_old = toggle_bit;        // alten Wert des Toggle bit zwischenspeichern
-    adc_value = get_od_adc(side);        // ADC Wert ermitteln
+    adc_value = get_od_adc(side);       // ADC Wert ermitteln
     
-    if( adc_value > _RPM_TRIGGER)        // ADC Wert über dem Triggerlevel?
+    if( adc_value > _RPM_TRIGGER)       // ADC Wert über dem Triggerlevel?
     {
         toggle_bit = 1;
     }
-    else if( adc_value < _RPM_TRIGGER)    // ADC Wert unter dem Triggerlevel?
+    else if( adc_value < _RPM_TRIGGER)  // ADC Wert unter dem Triggerlevel?
     {
         toggle_bit = 0;
     }
     
-    if ( toggle_bit != toggle_bit_old)    // Änderung des Bits stattgefunden?
+    if ( toggle_bit != toggle_bit_old)  // Änderung des Bits stattgefunden?
     {
-        tick_bit = 1;                    // ja
+        tick_bit = 1;                   // ja
     }
     else
     {
-        tick_bit = 0;                    // nein
+        tick_bit = 0;                   // nein
     }
     
     return tick_bit;                    // Wert des Bits zurückgeben

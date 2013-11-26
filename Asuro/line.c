@@ -51,9 +51,16 @@ void init_line(void)
 *           65536   max. hell
 *
 ************************************************************************/
-uint8_t get_line_adc(char side)
-{
-    if(side == _LEFT)                       // Auswahl ADC für den linken Liniensensor
+uint16_t get_line_adc(char side)
+{    
+    uint8_t i;
+
+    for ( i=0; i<255; i++)
+    {
+        //Warteschleife für Kanalwechsel
+    }
+
+    if (side == _LEFT)                       // Auswahl ADC für den linken Liniensensor
     {
         ADMUX |=  ( 1 << MUX0);
         ADMUX |=  ( 1 << MUX1);
@@ -61,7 +68,7 @@ uint8_t get_line_adc(char side)
         ADMUX &= ~( 1 << MUX3);
     }
     
-    else if(side == _RIGHT)                 // Auswahl ADC für den rechten Liniensensor
+    else if (side == _RIGHT)                 // Auswahl ADC für den rechten Liniensensor
     {
         ADMUX &= ~( 1 << MUX0);
         ADMUX |=  ( 1 << MUX1);
@@ -74,7 +81,9 @@ uint8_t get_line_adc(char side)
         uart_puts("kein gültiger ADC Kanal in get_line_adc()");
     }
 
-    ADCSRA |= ( 1 << ADSC);                 // Starte ADC Messung
+
+
+     ADCSRA |= ( 1 << ADSC);                 // Starte ADC Messung
             
     while( ADSC == 1)                       // Warte bis ADC-Messung beendet
     {
