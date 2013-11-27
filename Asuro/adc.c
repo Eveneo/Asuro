@@ -25,9 +25,19 @@
 ************************************************************************/
 void init_adc(void)
 {
-    ADMUX |= (1 << REFS0);                    // AVCC mit externem Kondensator am AREF-Pin
-    ADCSRA |= (1 << ADEN);                    // ADC Enable
-    ADCSRA |= (1 << ADPS2) | (1 << ADPS0);    // Abtastfrequenz: 8MHz/32=250kHz (4µs)
+    ADMUX |= (1 << REFS0);                      // AVCC mit externem Kondensator am AREF-Pin
+    ADCSRA |= (1 << ADEN);                      // ADC Enable
+    ADCSRA |= (1 << ADPS2) | (1 << ADPS0);      // Abtastfrequenz: 8MHz/32=250kHz (4µs)
+
+    ADCSRA |= ( 1 << ADSC);                     // Starte ADC Messung
+     
+    while( ADSC == 1)                           // Warte bis ADC-Messung beendet
+    {
+        //wait
+    }
+
+
+    (void) ADCW;                                // Verwerfen des ersten ADC Wertes (ungültig)                      
     
     uart_puts("ADC init done..." _CR);
 }

@@ -143,6 +143,7 @@
     uint16_t buffer2 = 0;
 
     buffer2 = get_switch_adc();
+    uart_puts("switch:");
     uart_puti(buffer2);
     uart_puts(_CR);
  

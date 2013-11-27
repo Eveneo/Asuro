@@ -83,7 +83,7 @@ uint16_t get_line_adc(char side)
 
 
 
-     ADCSRA |= ( 1 << ADSC);                 // Starte ADC Messung
+    ADCSRA |= ( 1 << ADSC);                 // Starte ADC Messung
             
     while( ADSC == 1)                       // Warte bis ADC-Messung beendet
     {

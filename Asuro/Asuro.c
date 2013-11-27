@@ -17,6 +17,7 @@
 #include "line.h"
 #include "switch.h"
 #include "adc.h"
+#include "line_follow.h"
 
 /** Test **/
 #include "test.h"
@@ -38,13 +39,13 @@ int main(void)
     uart_puts("all inits done..." _CR);
     sei();                                  // aktiviere globale Interrupts
     
- //   motor_dir(_FWD, _FWD);
- //   motor_pwr(255, 255);
+    motor_dir(_FWD, _FWD);
+  //  motor_pwr(255, 255);
          
     while(1)
     {
 
-       test();
+      follow_line();
 
     }//while(1)
     

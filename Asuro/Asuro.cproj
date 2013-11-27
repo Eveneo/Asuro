@@ -124,6 +124,12 @@
     <Compile Include="line.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="line_follow.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="line_follow.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="motor_control.c">
       <SubType>compile</SubType>
     </Compile>

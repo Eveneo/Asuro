@@ -39,6 +39,7 @@ C_SRCS +=  \
 ../adc.c \
 ../Asuro.c \
 ../line.c \
+../line_follow.c \
 ../motor_control.c \
 ../odometrie.c \
 ../status_led.c \
@@ -58,6 +59,7 @@ OBJS +=  \
 adc.o \
 Asuro.o \
 line.o \
+line_follow.o \
 motor_control.o \
 odometrie.o \
 status_led.o \
@@ -70,6 +72,7 @@ OBJS_AS_ARGS +=  \
 adc.o \
 Asuro.o \
 line.o \
+line_follow.o \
 motor_control.o \
 odometrie.o \
 status_led.o \
@@ -82,6 +85,7 @@ C_DEPS +=  \
 adc.d \
 Asuro.d \
 line.d \
+line_follow.d \
 motor_control.d \
 odometrie.d \
 status_led.d \
@@ -94,6 +98,7 @@ C_DEPS_AS_ARGS +=  \
 adc.d \
 Asuro.d \
 line.d \
+line_follow.d \
 motor_control.d \
 odometrie.d \
 status_led.d \
@@ -113,6 +118,8 @@ OUTPUT_FILE_DEP:= ./makedep.mk
 LIB_DEP+= 
 
 # AVR32/GNU C Compiler
+
+
 
 
 

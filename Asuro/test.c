@@ -17,42 +17,19 @@
 /** DEBUG **/
 uint8_t counter = 0;            // Anzahl Schleifendurchläufe
 uint8_t counter_long = 0;
-uint8_t pwr_left, pwr_right;
-uint16_t line_diff = 0;
-uint16_t line_left = 0;
-uint16_t line_right = 0;
+
+
 
 
 void test(void)
 {   
 
-#if 0
-    uint16_t line_diff = 0;
+#if 1
 
-    line_diff = get_line_adc(_LEFT) - get_line_adc(_RIGHT);
-    
-    if (line_diff > 5)
-    {
-        pwr_left -= 50;
-        pwr_right = 255;
-    }
-    else if (line_diff < -5)
-    {
-        pwr_left = 255;
-        pwr_right -= 50;
-    }
-    else
-    {
-        pwr_left = 255;
-        pwr_right = 255;
-    }
 
-    //motor_pwr(pwr_left, pwr_right);
-     uart_puti(line_diff);
-     uart_puts(_CR);
 #endif
  
-#if 1
+#if 0
     /** Ausgeben der ADC Werte der Liniensensoren **/
 
     line_right = get_line_adc(_RIGHT); 
