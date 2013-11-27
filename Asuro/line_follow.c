@@ -17,33 +17,41 @@ uint16_t line_right = 0;
 uint8_t  pwr_left   = 255;
 uint8_t  pwr_right  = 255;
 
-#define _TRIGGER_LINE   15
-#define _COR_LEVEL1     20
+#define _LDIFF_LVL1  15
+#define _LREG_LVL1   20
+
+//#define _DEBUG 0
+
+
 
 
 
  void follow_line(void)
  {
-     line_diff = get_line_adc(_LEFT) - get_line_adc(_RIGHT);
-     
-     if ( (line_diff > 15) && (pwr_left > (255-_COR_LEVEL1)) )
-     {
-      //  uart_puts("15");
-         pwr_left -= _COR_LEVEL1;
-         pwr_right = 255;
-     }
+    line_diff = get_line_diff();   
 
-     else if ( (line_diff < -15) && (pwr_right > (255-_COR_LEVEL1)) )
-     {
-       // uart_puts("-15");
-         pwr_left = 255;
-         pwr_right -= _COR_LEVEL1;
-     }
+    /** Linker Sensor dunkler **/   
+    if ( (line_diff < -_LDIFF_LVL1) && (pwr_left > _LREG_LVL1) )
+    {
+        pwr_left -= _LREG_LVL1;                                                     // linken Motor verlangsamen
+        pwr_right = 255;                                                            // rechter Motor vollgas
+    }
 
-     else
-     {
-     uart_puts("0");
-     }
+    /** Rechter Sensor dunkler **/
+    else if ( (_LDIFF_LVL1 < line_diff) && (pwr_right > _LREG_LVL1) )
+    {
+        pwr_left = 255;                                                             // linker Motor vollgas
+        pwr_right -= _LREG_LVL1;                                                    // rechten Motor verlangsamen
+    }
+
+    /** Beide Sensoren gleich hell/dunkel **/
+    else if ( (-_LDIFF_LVL1 < line_diff) && (line_diff < _LDIFF_LVL1) )
+    {
+        pwr_left = 255;
+        pwr_right = 255;
+    }
+
+
 
 //      else
 //      {
@@ -62,10 +70,10 @@ uint8_t  pwr_right  = 255;
 
 //          motor_pwr(pwr_left, pwr_right);
 // 
-          uart_puti(pwr_left);
-          uart_puts(";");
-          uart_puti(pwr_right);
-         uart_puts(";");
-         uart_puti(line_diff);
-         uart_puts(_CR);
+        uart_puti(pwr_left);
+        uart_puts(";");
+        uart_puti(pwr_right);
+        uart_puts(";");
+        uart_puti(line_diff);
+        uart_puts(_CR);
  }

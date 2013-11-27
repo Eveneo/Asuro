@@ -37,7 +37,7 @@ char toggle_bit;                            // toggle bit für Odometrie
 * /param    side:    _RIGHT    Auswahl des rechten Reifens
 *                    _LEFT    Auswahl des linken Reifens
 *
-* /return    uint16 Wert des ADCs
+* /return   uint16 Wert des ADCs
 *
 *
 ************************************************************************/
@@ -75,12 +75,13 @@ uint16_t get_od_adc(char side)
 
 /************************************************************************
 * /brief    Erkennung eines schwarz-weiß Wechsels der Drehzahlscheibe    
-*            Der gemessene ADC Wert wird mit dem _RPM_TRIGGER (siehe odometrie.h) verglichen. 
-*            Ist der Wert über diesem Trigger, wird das toggle_bit auf 1 gesetzt, ansonsten
-*            auf 0. Nun wird verglichen ob zwischen der vorigen Messung und der aktuellen
-*            ein unterschied besteht. War der ADC Wert vorher über dem Trigger und ist jetzt darunter
-*            hat ein Wechsel von schwarz auf weiß der Drehzahlscheibe stattgefunden. 
-*            In diesem Fall gibt die Funktion eine 1 zurück
+*
+*           Der gemessene ADC Wert wird mit dem _RPM_TRIGGER (siehe odometrie.h) verglichen. 
+*           Ist der Wert über diesem Trigger, wird das toggle_bit auf 1 gesetzt, ansonsten
+*           auf 0. Nun wird verglichen ob zwischen der vorigen Messung und der aktuellen
+*           ein unterschied besteht. War der ADC Wert vorher über dem Trigger und ist jetzt darunter
+*           hat ein Wechsel von schwarz auf weiß der Drehzahlscheibe stattgefunden. 
+*           In diesem Fall gibt die Funktion eine 1 zurück
 *
 * /param    side:    _RIGHT    Auswahl des rechten Reifens
 *                    _LEFT    Auswahl des linken Reifens

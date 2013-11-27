@@ -34,18 +34,22 @@ int main(void)
     init_line();                            // initialisiere Linienerkennung
     init_switch();                          // initialisiere Taster
     
-    status_led( _GREEN);                    
+    status_led( _ORANGE);                    
     line_led(_ON);
     uart_puts("all inits done..." _CR);
     sei();                                  // aktiviere globale Interrupts
     
     motor_dir(_FWD, _FWD);
-  //  motor_pwr(255, 255);
+    calibrate_line_sens();
+    
+    status_led(_GREEN);
          
     while(1)
     {
 
-      follow_line();
+      //follow_line();
+      uart_puti(get_line_diff());
+      uart_puts(_CR);
 
     }//while(1)
     

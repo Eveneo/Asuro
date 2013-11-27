@@ -24,7 +24,7 @@
 *
 ************************************************************************/
 void init_adc(void)
-{
+{    
     ADMUX |= (1 << REFS0);                      // AVCC mit externem Kondensator am AREF-Pin
     ADCSRA |= (1 << ADEN);                      // ADC Enable
     ADCSRA |= (1 << ADPS2) | (1 << ADPS0);      // Abtastfrequenz: 8MHz/32=250kHz (4µs)
