@@ -27,7 +27,7 @@
 #include "odometrie.h"
 #include "asuro.h"
 
-char toggle_bit;                            // toggle bit für Odometrie
+char toggle_bit[2];                            // toggle bit für Odometrie
 
 
 
@@ -43,7 +43,13 @@ char toggle_bit;                            // toggle bit für Odometrie
 ************************************************************************/
 uint16_t get_od_adc(char side)
 {
+    uint8_t i;
     PORTD |= ( 1 << PD7);               // PD7 auf HIGH -> keine LED Steuerung
+    
+    for( i=0; i<255; i++)
+    {
+        // wait
+    }
     
     
     if( side == _RIGHT)                 // aktivieren des rechten ADC
@@ -92,23 +98,25 @@ uint16_t get_od_adc(char side)
 ************************************************************************/
 uint8_t get_tick( char side)
 {
+/************* BAUSTELLE *********************/
+    
     uint16_t adc_value;                 // buffer für adc Wert
     char toggle_bit_old;                // Toggle Bit
     uint8_t tick_bit = 0;               // Wechselbit ( schwarz-weiß wechsel)
     
-    toggle_bit_old = toggle_bit;        // alten Wert des Toggle bit zwischenspeichern
+    toggle_bit_old = toggle_bit[side];        // alten Wert des Toggle bit zwischenspeichern
     adc_value = get_od_adc(side);       // ADC Wert ermitteln
     
     if( adc_value > _RPM_TRIGGER)       // ADC Wert über dem Triggerlevel?
     {
-        toggle_bit = 1;
+        toggle_bit[side] = 1;
     }
     else if( adc_value < _RPM_TRIGGER)  // ADC Wert unter dem Triggerlevel?
     {
-        toggle_bit = 0;
+        toggle_bit[side] = 0;
     }
     
-    if ( toggle_bit != toggle_bit_old)  // Änderung des Bits stattgefunden?
+    if ( toggle_bit[side] != toggle_bit_old)  // Änderung des Bits stattgefunden?
     {
         tick_bit = 1;                   // ja
     }

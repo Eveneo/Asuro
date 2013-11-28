@@ -47,9 +47,9 @@ int main(void)
     while(1)
     {
 
-      //follow_line();
-      uart_puti(get_line_diff());
-      uart_puts(_CR);
+      follow_line();
+      //uart_puti(get_line_diff());
+      //uart_puts(_CR);
 
     }//while(1)
     

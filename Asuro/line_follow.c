@@ -14,13 +14,15 @@
 int16_t line_diff  = 0;
 uint16_t line_left  = 0;
 uint16_t line_right = 0;
-uint8_t  pwr_left   = 255;
-uint8_t  pwr_right  = 255;
+uint8_t  pwr_left   = 80;
+uint8_t  pwr_right  = 80;
 
-#define _LDIFF_LVL1  15
+#define _LDIFF_STEPS  10
+#define _LDIFF_LVL1     20
 #define _LREG_LVL1   20
+#define _LREG_STEPS 10
 
-//#define _DEBUG 0
+#define _DEBUG 0
 
 
 
@@ -28,8 +30,59 @@ uint8_t  pwr_right  = 255;
 
  void follow_line(void)
  {
-    line_diff = get_line_diff();   
+     int8_t pwr_corlef, pwr_corrig;
+     uint8_t i;
+     
+     
+    line_diff = get_line_diff(); 
+/** VERSUCH FEINERE ABSTUFUNG DER ERKENNUNG  **/  
 
+    /** Linker Sensor dunkler **/
+    if ( line_diff < -_LDIFF_STEPS )
+    {
+        for ( i=5 ; i > 0; i--)
+        {
+            if ( line_diff < i*-_LDIFF_STEPS)
+            {
+                pwr_corlef = i*_LREG_STEPS;
+            }            
+        }
+    }
+
+    /** Rechter Sensor dunkler **/
+    if ( line_diff > _LDIFF_STEPS )
+    {
+        for ( i=5 ; i > 0; i--)
+        {
+            if ( line_diff < i*-_LDIFF_STEPS)
+            {
+                pwr_corrig = i*_LREG_STEPS;
+            }
+        }
+    }
+
+    /** Beide Sensoren gleich hell/dunkel **/
+    else if ( (-_LDIFF_LVL1 < line_diff) && (line_diff < _LDIFF_LVL1) )
+    {
+        if ( pwr_left < (255-_LREG_LVL1) )
+        {
+            pwr_left += _LREG_LVL1;
+        }
+
+        if ( pwr_right < 255-_LREG_LVL1 )
+        {
+            pwr_right += _LREG_LVL1;
+        }
+    }
+
+    motor_pwr(pwr_left, pwr_right);
+
+
+
+
+  
+  
+#if 0  
     /** Linker Sensor dunkler **/   
     if ( (line_diff < -_LDIFF_LVL1) && (pwr_left > _LREG_LVL1) )
     {
@@ -47,33 +100,26 @@ uint8_t  pwr_right  = 255;
     /** Beide Sensoren gleich hell/dunkel **/
     else if ( (-_LDIFF_LVL1 < line_diff) && (line_diff < _LDIFF_LVL1) )
     {
-        pwr_left = 255;
-        pwr_right = 255;
-    }
+         if ( pwr_left < (255-_LREG_LVL1) )
+         {
+             pwr_left += _LREG_LVL1;
+         }
 
+         if ( pwr_right < 255-_LREG_LVL1 )
+         {
+             pwr_right += _LREG_LVL1;
+         }
+     }
 
-
-//      else
-//      {
-//          if ( pwr_left < (255-_COR_LEVEL1) )
-//          {
-//              uart_puts("r+");
-//              pwr_left += _COR_LEVEL1;
-//          }
-// 
-//          if ( pwr_right < 255-_COR_LEVEL1 )
-//          {
-//             uart_puts("l+");
-//              pwr_right += _COR_LEVEL1;
-//          }
-//      }
-
-//          motor_pwr(pwr_left, pwr_right);
-// 
-        uart_puti(pwr_left);
-        uart_puts(";");
-        uart_puti(pwr_right);
-        uart_puts(";");
-        uart_puti(line_diff);
-        uart_puts(_CR);
+    motor_pwr(pwr_left, pwr_right);
+ 
+#endif
+    #if _DEBUG
+    uart_puti(pwr_left);
+    uart_puts(";");
+    uart_puti(pwr_right);
+    uart_puts(";");
+    uart_puti(line_diff);
+    uart_puts(_CR);
+    #endif
  }
